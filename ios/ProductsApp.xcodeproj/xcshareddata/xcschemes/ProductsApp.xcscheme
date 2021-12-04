@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "ReactComponents.app"
-               BlueprintName = "ReactComponents"
-               ReferencedContainer = "container:ReactComponents.xcodeproj">
+               BuildableName = "ProductsApp.app"
+               BlueprintName = "ProductsApp"
+               ReferencedContainer = "container:ProductsApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "ReactComponentsTests.xctest"
-               BlueprintName = "ReactComponentsTests"
-               ReferencedContainer = "container:ReactComponents.xcodeproj">
+               BuildableName = "ProductsAppTests.xctest"
+               BlueprintName = "ProductsAppTests"
+               ReferencedContainer = "container:ProductsApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ReactComponents.app"
-            BlueprintName = "ReactComponents"
-            ReferencedContainer = "container:ReactComponents.xcodeproj">
+            BuildableName = "ProductsApp.app"
+            BlueprintName = "ProductsApp"
+            ReferencedContainer = "container:ProductsApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "ReactComponents.app"
-            BlueprintName = "ReactComponents"
-            ReferencedContainer = "container:ReactComponents.xcodeproj">
+            BuildableName = "ProductsApp.app"
+            BlueprintName = "ProductsApp"
+            ReferencedContainer = "container:ProductsApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

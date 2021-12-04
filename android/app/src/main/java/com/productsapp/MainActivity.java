@@ -1,4 +1,4 @@
-package com.reactcomponents;
+package com.productsapp;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 
@@ -10,7 +10,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "ReactComponents";
+    return "ProductsApp";
   }
   @Override
 protected void onCreate(Bundle savedInstanceState) {
