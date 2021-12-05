@@ -5,6 +5,7 @@ import {ImagePickerResponse} from 'react-native-image-picker';
 import cafeApi from '../api/cafeApi';
 import {Producto, ProductResponse} from '../interfaces/appInterfaces';
 import {AuthContext} from './authContext';
+import SplashScreen from 'react-native-splash-screen';
 
 type ProductsContextProps = {
   Product: Producto[];
@@ -35,6 +36,7 @@ export const ProductsProvider = ({
   const loadProducts = async () => {
     const res = await cafeApi.get<ProductResponse>('/productos?limite=50');
     setProduct(res.data.productos);
+    SplashScreen.hide();
     console.log(res.data.productos);
   };
   const addProduct = async (

@@ -5,9 +5,7 @@ import {
   // AsyncStorage,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView,
   FlatList,
-  TextInput,
   RefreshControl,
   Image,
 } from 'react-native';
@@ -18,9 +16,6 @@ import {ProductsContext} from '../context/productContext';
 import {StackScreenProps} from '@react-navigation/stack';
 import {ProductsStackParams} from '../../navigation/ProductsNavigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Producto, ProductResponse} from '../interfaces/appInterfaces';
-import cafeApi from '../api/cafeApi';
 
 interface Props
   extends StackScreenProps<ProductsStackParams, 'ProductsScreen'> {}

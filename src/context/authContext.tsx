@@ -12,6 +12,7 @@ import {
 } from '../interfaces/appInterfaces';
 import {authReducer, AuthState} from './authReducer';
 import {Alert} from 'react-native';
+import LoadingScreen from '../screens/LoadingScreen';
 
 type AuthContextProps = {
   errorMessage: string;
@@ -36,7 +37,7 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: any) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-
+  const [isLoading, setIsLoading] = useState<boolean>();
   //cargamos nuestro token almacenado en caso de que no venga null
   useEffect(() => {
     checkToken();
@@ -61,6 +62,7 @@ export const AuthProvider = ({children}: any) => {
   };
   const signUp = async ({correo, password}: LoginData) => {
     try {
+      setIsLoading(true);
       const {data} = await cafeApi.post<LoginResponse>('/auth/login', {
         correo,
         password,
@@ -69,6 +71,7 @@ export const AuthProvider = ({children}: any) => {
         type: 'SignIn',
         payload: {token: data.token, user: data.usuario},
       });
+      setIsLoading(false);
       //almacenamos nuestro objeto o token aqui
       await AsyncStorage.setItem('token', data.token);
       console.log(data);
@@ -126,6 +129,9 @@ export const AuthProvider = ({children}: any) => {
       {text: 'no', onPress: undefined},
     ]);
   };
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
   return (
     <AuthContext.Provider
       value={{
