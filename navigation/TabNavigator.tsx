@@ -5,6 +5,7 @@ import ProfileScreen from '../src/screens/ProfileScreen';
 import ProductsNavigator from './ProductsNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {AddNewProduct} from '../src/screens/AddNewProduct';
+import {UserNavigator} from './UserNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +53,7 @@ export const MyTabs = () => {
 
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={UserNavigator}
         options={{
           tabBarIcon: () => (
             <Icon name="people-outline" size={20} color="white" />

@@ -16,11 +16,9 @@ export const Navigator = () => {
   //vamos a renderrizar los screen dependiendo del status
   const {status} = useContext(AuthContext);
 
-  // if (status !== 'checking') {
-  //   SplashScreen.hide();
-  // } else {
-  //   return <LoadingScreen />;
-  // }
+  if (status === 'checking') {
+    return <LoadingScreen />;
+  }
   return (
     <Stack.Navigator
       screenOptions={{

@@ -7,11 +7,14 @@ import {ProductsProvider} from './src/context/productContext';
 
 import {MyTabs} from './navigation/TabNavigator';
 import {Navigator} from './navigation/StackNavigator';
+import {PermissionProvider} from './src/context/permissionContext';
 
 const AppState = ({children}: any) => {
   return (
     <AuthProvider>
-      <ProductsProvider>{children}</ProductsProvider>
+      <PermissionProvider>
+        <ProductsProvider>{children}</ProductsProvider>
+      </PermissionProvider>
     </AuthProvider>
   );
 };

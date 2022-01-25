@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     color: '#000',
     fontSize: 18,
     fontWeight: 'bold',
-    top: 95,
+    top: 100,
   },
   label: {
     color: '#000',

@@ -28,5 +28,6 @@ export const useCategories = () => {
     getCategories,
     Category,
     isLoading,
+    setIsLoading,
   };
 };

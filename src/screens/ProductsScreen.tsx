@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -16,22 +16,54 @@ import {ProductsContext} from '../context/productContext';
 import {StackScreenProps} from '@react-navigation/stack';
 import {ProductsStackParams} from '../../navigation/ProductsNavigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Usuario} from '../interfaces/appInterfaces';
 
 interface Props
   extends StackScreenProps<ProductsStackParams, 'ProductsScreen'> {}
 export const ProductsScreen = ({navigation}: Props) => {
   //mandamos a traer nuestro token u objeto almacenado
-  const {logout} = useContext(AuthContext);
-  const {Product, loadProducts} = useContext(ProductsContext);
+  const {logout, userStoraged} = useContext(AuthContext);
+  const {Product, loadProducts, loadUsers, image, users, removeStorage} =
+    useContext(ProductsContext);
   const [Refresh, setRefresh] = useState(false);
   const {top} = useSafeAreaInsets();
+  // const [imgUser, setImgUser] = useState<Usuario>();
 
+  //vamos a pasar los ultimso productos comoi primeros
   const loadProductsFromBackend = async () => {
     setRefresh(true);
-    await loadProducts();
+    await Promise.all([loadProducts, loadUsers]);
     setRefresh(false);
   };
+  //my uid
+  const id = userStoraged?.slice(-27).substring(1, 25);
+  //my profile image
+  const imageProfile = image?.substring(1, 104); //105 total
 
+  //esta funcion la cree para que cuando toque la imagen lo lleve al screen de editar product si el producto lo creo  el usuario de lo ocntrario lo lleva al screen del producto del seller
+  const viewArticle = (
+    myId: string | undefined,
+    idSeller: string,
+    idProduct: string | undefined,
+    imageProduct: string | undefined,
+    nameProduct: string,
+    nameSeller: string | undefined,
+    imageSeller: string | undefined,
+    price: string | undefined,
+  ) => {
+    if (myId !== idSeller) {
+      navigation.navigate('ArticleScreen', {
+        id: idProduct,
+        img: imageProduct,
+        name: nameProduct,
+        nameSeller: nameSeller,
+        imageSeller: imageSeller,
+        price: price,
+      });
+    } else {
+      navigation.navigate('ProductScreen', {id: idProduct, name: nameProduct});
+    }
+  };
   return (
     <>
       {/* <Image source={require('../assets')} /> */}
@@ -51,7 +83,10 @@ export const ProductsScreen = ({navigation}: Props) => {
       <TouchableOpacity
         activeOpacity={0.6}
         style={{...styles.logout, top: top + 5}}
-        onPress={logout}>
+        onPress={() => {
+          logout();
+          removeStorage();
+        }}>
         <Icon name="log-out-outline" color="black" size={40} />
       </TouchableOpacity>
 
@@ -63,10 +98,16 @@ export const ProductsScreen = ({navigation}: Props) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() =>
-                navigation.navigate('ProductScreen', {
-                  id: item._id,
-                  name: item.nombre,
-                })
+                viewArticle(
+                  id,
+                  item.usuario._id,
+                  item._id,
+                  item.img,
+                  item.nombre,
+                  item.usuario.nombre,
+                  item.usuario.usuario?.img,
+                  item.precio,
+                )
               }
               style={{marginTop: 10}}>
               <Text style={{marginHorizontal: 10}}>{item.nombre}</Text>
@@ -76,14 +117,52 @@ export const ProductsScreen = ({navigation}: Props) => {
                   style={{width: '100%', height: 300}}
                 />
               )}
-              <View style={{flexDirection: 'row', marginHorizontal: 10}}>
-                <Text style={{fontSize: 10}}>Publicado por</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginHorizontal: 10,
+                  alignItems: 'center',
+                  marginTop: 5,
+                }}>
+                <Image
+                  source={{
+                    uri:
+                      id === item.usuario._id
+                        ? imageProfile
+                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                  }}
+                  style={{
+                    width: 30,
+                    height: 30,
+                    borderRadius: 100,
+                    marginRight: 5,
+                  }}
+                />
+                <Text style={{fontSize: 10}}>Publicado por </Text>
+                {/* <Text style={{fontSize: 10, fontWeight: 'bold'}}>
+                    {!usuario.newName ? usuario.nombre : usuario.newName}
+                  </Text> */}
+                <Text
+                  style={{fontSize: 10, fontWeight: 'bold', marginRight: 5}}>
+                  {item.usuario.nombre}
+                </Text>
                 <Text style={{fontSize: 10, fontWeight: 'bold'}}>
-                  {' ' + item.usuario.nombre}
+                  Desde: {' ' + item.precio}
                 </Text>
               </View>
             </TouchableOpacity>
           )}
+          ItemSeparatorComponent={() => (
+            <Text style={{color: 'black'}}>
+              ___________________________________________
+            </Text>
+          )}
+          ListFooterComponentStyle={{marginBottom: 140, alignItems: 'center'}}
+          ListFooterComponent={
+            <Text>
+              _____________________________________________________________________
+            </Text>
+          }
           refreshControl={
             <RefreshControl
               refreshing={Refresh}

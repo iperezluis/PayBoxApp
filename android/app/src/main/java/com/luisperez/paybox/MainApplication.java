@@ -1,6 +1,8 @@
-package com.productsapp;
+// package com.productsapp;
+package com.luisperez.paybox;
 
 // react-native-splash-screen >= 0.3.1
+import com.tkporter.sendsms.SendSMSPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import android.app.Application;
 import android.content.Context;
@@ -28,7 +30,11 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new SplashScreenReactPackage());
-          return packages;
+          // packages.add(
+          // SendSMSPackage.getInstance()
+          // );
+          
+            return packages;
         }
 
         @Override

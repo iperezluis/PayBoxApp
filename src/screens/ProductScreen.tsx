@@ -9,6 +9,7 @@ import {
   // FlatList,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 // import Carousel from 'react-native-snap-carousel';
 import {ProductsContext} from '../context/productContext';
@@ -28,7 +29,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 interface Props
   extends StackScreenProps<ProductsStackParams, 'ProductScreen'> {}
 
-const ProductScreen = ({route}: Props) => {
+const ProductScreen = ({route, navigation}: Props) => {
   // const isMounted = useRef(true);
   const {
     loadProductById,
@@ -36,16 +37,21 @@ const ProductScreen = ({route}: Props) => {
     updateProduct,
     deleteProduct,
     upLoadImage,
+    loadProducts,
   } = useContext(ProductsContext);
   const {isLoading, Category} = useCategories();
   const {id = '', name} = route.params;
   const [tempUri, setTempUri] = useState<string>();
-  const {_id, categoryId, nombre, img, onChange, form, setFormValue} = useForm({
-    _id: id,
-    categoryId: '',
-    nombre: name,
-    img: '',
-  });
+  const [isUpdating, setIsUpdating] = useState(false);
+  // const [price, setPrice] = useState<string>('');
+  const {_id, categoryId, nombre, img, onChange, form, price, setFormValue} =
+    useForm({
+      _id: id,
+      categoryId: '',
+      nombre: name,
+      img: '',
+      price: '',
+    });
 
   useEffect(() => {
     loadProduct();
@@ -54,6 +60,33 @@ const ProductScreen = ({route}: Props) => {
     // };
   }, []);
 
+  const DeleteProduct = () => {
+    Alert.alert('Eliminar', '¿Seguro que quieres eliminar este procducto?', [
+      {
+        text: 'ok',
+        onPress: () => {
+          deleteProduct(_id);
+          Alert.alert(
+            'Archivo eliminado',
+            '¡Se ha eliminado el producto satisfactoriamente!',
+            [
+              {
+                text: 'ok',
+                onPress: () => {
+                  navigation.navigate('ProductsScreen');
+                },
+              },
+            ],
+          );
+          console.log('producto eliminado');
+        },
+      },
+      {
+        text: 'no',
+        onPress: () => null,
+      },
+    ]);
+  };
   const loadProduct = async () => {
     if (id?.length === 0) {
       return;
@@ -66,6 +99,7 @@ const ProductScreen = ({route}: Props) => {
         categoryId: product.categoria._id,
         nombre: nombre,
         img: product.img || '',
+        price: '',
       });
       console.log('cargo el setForm');
     } catch (error) {
@@ -74,13 +108,13 @@ const ProductScreen = ({route}: Props) => {
   };
   const saveOrUpdate = () => {
     if (id.length > 0) {
-      updateProduct(categoryId, nombre, id);
+      updateProduct(categoryId, nombre, id, price);
     } else {
       // if (categoryId.length === 0) {
       //   onChange(Category[0]._id, 'categoryId');
       // }
       const tempCategoryId = categoryId || Category[0]._id;
-      addProduct(tempCategoryId, nombre);
+      addProduct(tempCategoryId, nombre, price);
     }
   };
   const takePhoto = () => {
@@ -119,6 +153,9 @@ const ProductScreen = ({route}: Props) => {
   if (isLoading) {
     return <LoadingScreen />;
   }
+  if (isUpdating) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
@@ -128,11 +165,21 @@ const ProductScreen = ({route}: Props) => {
             <Text style={styles.lable}>
               {nombre ? nombre : 'Nombre del producto'}
             </Text>
+
             <TextInput
               style={styles.textInput}
               value={nombre}
               onChangeText={value => onChange(value, 'nombre')}
             />
+            <Text style={styles.lable}>
+              {price ? price + ' USD' : 'precio del producto'}
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              value={price}
+              onChangeText={value => onChange(value, 'price')}
+            />
+
             {/* <Text>{JSON.stringify(form, null, 4)}</Text> */}
 
             <Text style={styles.lable}>Seleccione la categoria:</Text>
@@ -166,7 +213,11 @@ const ProductScreen = ({route}: Props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.5}
-                onPress={() => deleteProduct(_id)}
+                onPress={async () => {
+                  setIsUpdating(true);
+                  await DeleteProduct();
+                  setIsUpdating(false);
+                }}
                 style={{
                   ...styles.buttonContainer,
                   marginTop: 20,
@@ -222,51 +273,3 @@ const ProductScreen = ({route}: Props) => {
 };
 
 export default ProductScreen;
-{
-  /* <View
-          style={{
-            top: 250,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'red',
-          }}>
-          <FlatList
-            data={Product}
-            keyExtractor={({_id}) => _id}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                style={{marginHorizontal: 10}}
-                activeOpacity={0.6}
-                onPress={() =>
-                  navigation.navigate('ProductScreen', {
-                    id: item._id,
-                    name: item.nombre,
-                  })
-                }>
-                <Text>{item.nombre}</Text>
-              </TouchableOpacity>
-            )}
-            horizontal
-          />
-        </View> */
-}
-// <SafeAreaView
-//   style={{
-//     position: 'absolute',
-//     top: 190,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: 'green',
-//     // padding: 40,
-//     // borderRadius: 30,
-//     // marginHorizontal: 20,
-//   }}>
-//   <Carousel
-//     data={Product}
-//     renderItem={({item}) => renderItem(item)}
-//     layout="default"
-//     sliderWidth={widthScreen}
-//     itemWidth={widthScreen}
-//     // style={{height: 300}}
-//   />
-// </SafeAreaView>
