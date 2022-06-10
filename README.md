@@ -1,7 +1,7 @@
 #  PayBox App
 
 
-# It's necessary consider the following instruccions step by step  👋
+# It's necessary consider the following instructions step by step  👋
 
 - Rebuild the react-native dependences 
 
