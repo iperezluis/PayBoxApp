@@ -263,7 +263,7 @@ const ProfileScreen = ({navigation}: Props) => {
             onPress={() => setisVisibleNumber(true)}>
             <Icon name="chevron-forward-outline" size={30} color="black" />
           </TouchableOpacity>
-          <Text style={styles.text}>Invita a tus amigos unirse a Paybox</Text>
+          <Text style={styles.text}>Invita a tus amigos unirse a Paybox ahora!</Text>
           <TouchableOpacity
             style={{position: 'absolute', right: 10, top: 160}}
             onPress={() => askContactPermission()}>
