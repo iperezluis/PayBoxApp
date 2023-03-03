@@ -1,8 +1,8 @@
 // package com.productsapp;
-package com.luisperez.paybox;
+package com.luisperezv.paybox;
 
 // react-native-splash-screen >= 0.3.1
-import com.tkporter.sendsms.SendSMSPackage;
+import com.burnweb.rnsendintent.RNSendIntentPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import android.app.Application;
 import android.content.Context;
@@ -32,6 +32,9 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new SplashScreenReactPackage());
           // packages.add(
           // SendSMSPackage.getInstance()
+          // );
+          // packages.add(
+          // new RNSendIntentPackage()
           // );
           
             return packages;

@@ -214,7 +214,7 @@ export const AddNewProduct = ({route, navigation}: Props) => {
           <Image source={{uri: tempUri}} style={{width: '100%', height: 300}} />
         )}
       </View>
-      <Text>{JSON.stringify(form, null, 4)}</Text>
+      {/* <Text>{JSON.stringify(form, null, 4)}</Text> */}
     </ScrollView>
   );
 };

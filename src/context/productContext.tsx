@@ -1,6 +1,5 @@
-import {useNavigation} from '@react-navigation/core';
-import React, {createContext, useEffect, useContext, useState} from 'react';
-import {Alert} from 'react-native';
+import React, {createContext, useEffect, useState} from 'react';
+
 import {ImagePickerResponse} from 'react-native-image-picker';
 import cafeApi from '../api/cafeApi';
 import {
@@ -9,6 +8,7 @@ import {
   ProductResponse,
   Usuario,
 } from '../interfaces/appInterfaces';
+
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { Usuario, Usuarios, ProductResponse } from '../interfaces/appInterfaces';
@@ -63,6 +63,7 @@ export const ProductsProvider = ({
     loadProducts();
   }, []);
 
+  // TO DO quitar ese checkusuario y mandar a llamar la database desde aca ewl conetxt
   useEffect(() => {
     checkUsuario();
   }, []);

@@ -1,8 +1,7 @@
 // package com.productsapp;
-package com.luisperez.paybox;
+package com.luisperezv.paybox;
 
-import android.content.Intent; 
-import com.tkporter.sendsms.SendSMSPackage;
+import android.content.Intent;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen;
@@ -22,11 +21,11 @@ protected void onCreate(Bundle savedInstanceState) {
   SplashScreen.show(this);
   super.onCreate(null);
 }
-@Override
-public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	super.onActivityResult(requestCode, resultCode, data);
-	//probably some other stuff here
-	SendSMSPackage.getInstance().onActivityResult(requestCode, resultCode, data);
-}
+// @Override
+// public void onActivityResult(int requestCode, int resultCode, Intent data) {
+// 	super.onActivityResult(requestCode, resultCode, data);
+// 	probably some other stuff here
+// 	SendSMSPackage.getInstance().onActivityResult(requestCode, resultCode, data);
+// }
 
 }

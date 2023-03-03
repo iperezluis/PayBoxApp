@@ -26,7 +26,6 @@ import {CustomSwitch} from '../components/CustomSwitcth';
 
 interface Props extends StackScreenProps<UsuarioStackParams, 'ProfileScreen'> {}
 
-const ProfileScreen = ({navigation}: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [tempUri, setTempUri] = useState<string>();
   const {Usuario, userStoraged} = useContext(AuthContext);
@@ -71,16 +70,12 @@ const ProfileScreen = ({navigation}: Props) => {
   const checkData = () => {
     setRefresh(true);
     console.log(newImg?.length);
+    
     // updateUser(usuario.id, newName);
     checkUsuario();
     // loadProducts();
     setRefresh(false);
   };
-
-  // useEffect(() => {
-  //   loadDetailUser();
-  //   console.log(newImg);
-  // }, [name]);
 
   if (_img?.length === 0) {
     return <LoadingScreen />;
@@ -166,6 +161,7 @@ const ProfileScreen = ({navigation}: Props) => {
           <View
             style={{
               justifyContent: 'center',
+
               marginTop: 30,
               alignItems: 'center',
               flexDirection: 'row',
@@ -463,8 +459,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   image: {
-    width: 140,
-    height: 140,
+    width: 160,
+    height: 160,
     borderRadius: 100,
   },
   buttonPhoto: {
@@ -475,8 +471,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    right: 65,
-    top: 80,
+    right: 100,
+    top: 95,
   },
 });
 export default ProfileScreen;

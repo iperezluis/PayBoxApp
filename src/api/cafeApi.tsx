@@ -2,7 +2,9 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //esta direccion Ip aveces varia pendiente por si el Error network
-const baseURL = 'http://192.168.0.104:8080/api';
+// const baseURL = 'http://192.168.0.104:8080/api';
+// const baseURL = 'https://paybox-backend.herokuapp.com/api';
+const baseURL = 'https://paybox-backend-production.up.railway.app/api';
 
 const cafeApi = axios.create({baseURL});
 

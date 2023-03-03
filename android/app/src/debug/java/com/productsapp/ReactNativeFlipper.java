@@ -5,7 +5,7 @@
  * directory of this source tree.
  */
 // package com.productsapp;
-package com.luisperez.paybox;
+package com.luisperezv.paybox;
 
 import android.content.Context;
 import com.facebook.flipper.android.AndroidFlipperClient;

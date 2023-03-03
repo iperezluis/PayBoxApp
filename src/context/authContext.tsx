@@ -1,7 +1,8 @@
-import React, {useReducer, useState, useEffect} from 'react';
+import React, {useReducer, useState, useEffect, createContext} from 'react';
+import {Alert} from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {createContext} from 'react';
 import cafeApi from '../api/cafeApi';
 import {
   LoginData,
@@ -9,17 +10,14 @@ import {
   RegisterData,
   RegisterResponse,
   Usuario,
-  Usuarios,
 } from '../interfaces/appInterfaces';
+
 import {authReducer, AuthState} from './authReducer';
-import {Alert} from 'react-native';
 import LoadingScreen from '../screens/LoadingScreen';
 
 type AuthContextProps = {
   errorMessage: string;
   token: string | null;
-  // data: string | undefined;
-  // name: string | undefined;
   userStoraged: string | undefined;
   Usuario: Usuario | undefined;
   user: Usuario | null;
@@ -53,7 +51,11 @@ export const AuthProvider = ({children}: any) => {
   //lo mandmaos a chequear si el token almacenado es null hacemos un dispatch de error
   const checkToken = async () => {
     const token = await AsyncStorage.getItem('token');
-    // const usuario = await AsyncStorage.getItem('usuario');
+    if (!token) {
+      console.log('token no existe');
+      return dispatch({type: 'notAuthenticated'});
+    }
+
     const usuarioStorage = await AsyncStorage.getItem('usuario');
     if (usuarioStorage) {
       JSON.parse(usuarioStorage);
@@ -62,10 +64,6 @@ export const AuthProvider = ({children}: any) => {
       // console.log('estos son los datos del usuario: ' + usuario);
     } else {
       console.log('no se pudo traer lso datos del usuario');
-    }
-    if (!token) {
-      console.log('token no existe');
-      return dispatch({type: 'notAuthenticated'});
     }
 
     //si el token no es null, validar el token
@@ -144,13 +142,6 @@ export const AuthProvider = ({children}: any) => {
         type: 'SignIn',
         payload: {token: data.token, user: data.usuario},
       });
-      if (res.status === 500) {
-        dispatch({
-          type: 'addError',
-          payload: 'Hubo un error en la conexion. Falla en la comunicacion',
-        });
-      }
-      console.log({nombre, correo, password});
     } catch (error) {
       if (!nombre || !correo || !password) {
         dispatch({type: 'addError', payload: 'Los campos estan vacios'});
@@ -190,11 +181,8 @@ export const AuthProvider = ({children}: any) => {
   return (
     <AuthContext.Provider
       value={{
-        //aqui desestructuramos todo lo que esta en el state ya que tinee todo lo que nos pide el provider
         ...state,
         userStoraged,
-        // name,
-        // data,
         Usuario,
         signIn,
         signUp,

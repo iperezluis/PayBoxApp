@@ -23,7 +23,6 @@ export const MyTabs = () => {
           elevation: 0,
           height: 70,
           marginBottom: 0,
-
           borderTopLeftRadius: 70,
           borderTopRightRadius: 70,
           borderStartWidth: 0,
