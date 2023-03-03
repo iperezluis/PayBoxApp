@@ -91,7 +91,7 @@ const RegisterScreen = ({navigation}: Props) => {
                 fontWeight: 'bold',
                 top: 30,
               }}>
-              - PayBox CEO
+              - PayBox Founder & CEO
             </Text>
             <Text style={[styles.globalMargin, styles.welcomeTitle]}>
               Welcome to PayBox!
